@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style type="text/tailwindcss">
     @theme {
         --color-isaac-light: #597072;
@@ -19,98 +20,124 @@
         background-color: var(--color-isaac-dark) !important;
         color: white !important;
     }
-    </style>
+</style>
 </head>
-<body class="bg-isaac-dark text-white font-sans pt-16">
+<body class="bg-isaac-dark text-white font-sans">
 
-<nav class="bg-black/60 backdrop-blur-md fixed w-full z-50 top-0 start-0 border-b border-white/5">
+<nav class="bg-black/60 backdrop-blur-md fixed w-full z-50 top-0 start-0">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    
+
     <a href="#" class="flex items-center space-x-3">
       <img src="../src/logo.png" class="h-7" alt="Logo" />
       <span class="self-center text-xl text-white font-black tracking-tighter uppercase">ISAAC IT <span class="text-isaac-orange">SERVICES</span></span>
     </a>
     
-    <button data-collapse-toggle="navbar-cta" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-cta" aria-expanded="false">
+    <button data-drawer-target="sidebar-menu" data-drawer-toggle="sidebar-menu" data-drawer-placement="right" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-isaac-orange" aria-controls="sidebar-menu">
         <span class="sr-only">Open main menu</span>
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
         </svg>
     </button>
     
-    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
-      <ul class="flex flex-col p-4 md:p-0 mt-4 font-bold rounded-lg bg-black/80 md:bg-transparent border border-white/10 md:border-0 md:flex-row md:gap-10 md:mt-0 items-start md:items-center justify-center w-full space-y-2 md:space-y-0">
-        <li class="w-full md:w-auto">
-          <a href="#info" class="block py-2 px-3 text-isaac-orange rounded-sm md:p-0 transition-colors" aria-current="page">Values</a>
-        </li>
-        <li class="w-full md:w-auto">
-          <a href="#about" class="block py-2 px-3 text-white/80 hover:text-white rounded-sm md:p-0 transition-colors">About Us</a>
-        </li>
-        <li class="w-full md:w-auto">
-          <a href="#services" class="block py-2 px-3 text-white/80 hover:text-white rounded-sm md:p-0 transition-colors">Services</a>
-        </li>
-        <li class="w-full md:w-auto">
-          <a href="#contact" class="block py-2 px-3 text-white/80 hover:text-white rounded-sm md:p-0 transition-colors border-b-2 border-transparent hover:border-isaac-orange">Contact Us</a>
-        </li>
+    <div class="items-center justify-between hidden md:flex md:w-auto md:order-1">
+      <ul class="flex flex-row gap-10 font-bold items-center justify-center">
+        <li><a href="#info" class="block text-isaac-orange transition-colors">Values</a></li>
+        <li><a href="#about" class="block text-white/80 hover:text-white transition-colors">About Us</a></li>
+        <li><a href="#services" class="block text-white/80 hover:text-white transition-colors">Services</a></li>
+        <li><a href="#contact" class="block text-white/80 hover:text-white transition-colors border-b-2 border-transparent hover:border-isaac-orange">Contact Us</a></li>
       </ul>
     </div>
+
   </div>
 </nav>
 
-<section class="relative min-h-screen flex items-center bg-isaac-dark overflow-hidden">
-  <video autoplay muted loop playsinline id="bg-video" class="absolute inset-0 w-full h-full object-cover z-0 brightness-[0.25] pointer-events-none">
-    <source src="../src/hero-cover.mp4" type="video/mp4">
-  </video>
+<div id="sidebar-menu" class="fixed top-0 right-0 z-50 h-screen p-6 overflow-y-auto transition-transform translate-x-full bg-black backdrop-blur-md md:hidden" tabindex="-1" aria-labelledby="drawer-right-label">
+    <button type="button" data-drawer-hide="sidebar-menu" aria-controls="sidebar-menu" class="text-gray-400 bg-transparent hover:bg-white/10 hover:text-white rounded-lg text-sm w-8 h-8 absolute top-4 end-4 inline-flex items-center justify-center">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
 
-    <div class="relative z-10 w-full max-w-screen-xl px-6 py-20 mx-auto lg:py-32">
-        <div class="max-w-3xl">
-            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-7xl text-white uppercase">
+    <div class="py-12">
+        <ul class="space-y-6 font-bold text-xl tracking-wide uppercase">
+            <li>
+                <a href="#info" data-drawer-hide="sidebar-menu" class="block py-2 px-4 text-isaac-orange rounded-xl hover:bg-white/5 transition-colors">Values</a>
+            </li>
+            <li>
+                <a href="#about" data-drawer-hide="sidebar-menu" class="block py-2 px-4 text-white/80 hover:text-white rounded-xl hover:bg-white/5 transition-colors">About Us</a>
+            </li>
+            <li>
+                <a href="#services" data-drawer-hide="sidebar-menu" class="block py-2 px-4 text-white/80 hover:text-white rounded-xl hover:bg-white/5 transition-colors">Services</a>
+            </li>
+            <li>
+                <a href="#contact" data-drawer-hide="sidebar-menu" class="block py-2 px-4 text-white/80 hover:text-white rounded-xl hover:bg-white/5 transition-colors border-l-4 border-transparent hover:border-isaac-orange pl-3">Contact Us</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<section class="relative min-h-screen flex items-center justify-center bg-isaac-dark overflow-hidden py-16">
+    <video autoplay muted loop playsinline id="bg-video" class="absolute top-0 left-0 w-full h-full object-cover z-0 brightness-[0.25] pointer-events-none">
+        <source src="../src/hero-cover.mp4" type="video/mp4">
+    </video>
+
+    <div class="py-8 px-4 z-10 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12 w-full flex flex-col items-center justify-center">
+
+            <h1 class="justify-between items-center py-1 px-1 pr-2 mb-2 text-5xl font-extrabold tracking-tight leading-none md:text-7xl text-white uppercase">
                 ISAAC IT <span class="text-isaac-orange">SERVICES</span>
             </h1>
-            
-            <p class="text-lg md:text-2xl mb-6 leading-relaxed">
-              Empowering Philippine Businesses Through <br class="hidden sm:block"> Intelligent and Secure 
-              <span class="text-isaac-orange font-semibold">Solutions</span>
-            </p>
 
-            <div class="flex flex-wrap gap-4 py-2">
-                <a href="#services" class="inline-flex items-center justify-center px-6 py-3 text-md font-bold text-isaac-dark rounded-lg bg-isaac-orange hover:scale-105 transition-transform w-full sm:w-auto text-center">
-                    Get started 
-                    <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </a>
-            </div>
+        <span class="text-2xl">
+            Empowering Philippine Businesses Through <br> Intelligent and Secure
+            <span class="text-rotate">
+                <span>
+                    <span class="text-2xl">Solutions</span>
+                    <span class="text-2xl">Infrastructure</span>
+                    <span class="text-2xl">Innovation</span>
+                </span>
+            </span>
+        </span>
+        <div class="flex flex-col mb-8 lg:mb-16 space-y-6 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+            <a href="#info" class="inline-flex justify-center items-center my-2 py-2 px-5 text-base font-medium text-center text-white rounded-lg bg-isaac-orange hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                Learn more
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a>      
         </div>
     </div>
 </section>
 
 <section id="info" class="bg-isaac-dark text-white">
-  <div class="py-12 px-6 mx-auto max-w-screen-xl lg:py-16">
+  <div class="py-8 px-4 mx-10 max-w-screen-xl sm:py-16 lg:px-6">
       <div class="max-w-screen-md mb-8 lg:mb-16">
-          <h2 class="mb-4 text-3xl md:text-4xl tracking-tight font-extrabold">Empowering Philippine Businesses Through Intelligent and Secure Technology Solutions</h2>
-          <p class="text-slate-200 text-base sm:text-xl">At Isaac IT Services, we drive digital transformation by fostering a culture of innovation, maintaining a relentless focus on customer centricity, and building success through seamless collaboration.</p>
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold">Empowering Philippine Businesses Through Intelligent and Secure Technology Solutions</h2>
+          <p class="text-slate-200 sm:text-xl">At Isaac IT Services, we drive digital transformation by fostering a culture of innovation, maintaining a relentless focus on customer centricity, and building success through seamless collaboration.</p>
       </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5 md:border-0 md:p-0">
-              <div class="flex justify-center items-center mb-4 w-11 h-11 rounded-full bg-isaac-orange text-isaac-dark border-isaac-light">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+      <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+          <div>
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange text-isaac-dark lg:h-12 lg:w-12 border-isaac-light">
+                  <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
               </div>
               <h3 class="mb-2 text-xl font-bold">Collaboration</h3>
-              <p class="text-slate-300 text-sm sm:text-base">We believe that the most complex IT challenges are solved through collective intelligence, treating our clients as partners and our team as a unified engine of shared expertise.</p>
+              <p class="text-slate-300">We believe that the most complex IT challenges are solved through collective intelligence, treating our clients as partners and our team as a unified engine of shared expertise.</p>
           </div>
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5 md:border-0 md:p-0">
-              <div class="flex justify-center items-center mb-4 w-11 h-11 rounded-full bg-isaac-orange text-isaac-dark">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path></svg>
+          <div>
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange text-isaac-dark lg:h-12 lg:w-12">
+                <svg class="w-6 h-6 text-isaac-dark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M3.559 4.544c.355-.35.834-.544 1.33-.544H19.11c.496 0 .975.194 1.33.544.356.35.559.829.559 1.331v9.25c0 .502-.203.981-.559 1.331-.355.35-.834.544-1.33.544H15.5l-2.7 3.6a1 1 0 0 1-1.6 0L8.5 17H4.889c-.496 0-.975-.194-1.33-.544A1.868 1.868 0 0 1 3 15.125v-9.25c0-.502.203-.981.559-1.331ZM7.556 7.5a1 1 0 1 0 0 2h8a1 1 0 0 0 0-2h-8Zm0 3.5a1 1 0 1 0 0 2H12a1 1 0 1 0 0-2H7.556Z" clip-rule="evenodd"/>
+                </svg>
               </div>
               <h3 class="mb-2 text-xl font-bold">Customer-Centricity</h3>
-              <p class="text-slate-300 text-sm sm:text-base">Our strategy begins and ends with your business goals; every technical decision we make is measured by its ability to provide tangible value and a seamless experience for your end users.</p>
+              <p class="text-slate-300">Our strategy begins and ends with your business goals; every technical decision we make is measured by its ability to provide tangible value and a seamless experience for your end users.</p>
           </div>
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5 md:border-0 md:p-0">
-              <div class="flex justify-center items-center mb-4 w-11 h-11 rounded-full bg-isaac-orange text-isaac-dark">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-              </div>
+          <div>
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange text-isaac-dark lg:h-12 lg:w-12">
+                    <svg class="w-6 h-6 text-isaac-dark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
               <h3 class="mb-2 text-xl font-bold">Innovation</h3>
-              <p class="text-slate-300 text-sm sm:text-base">We don't just maintain the status quo; we proactively integrate emerging technologies and creative problem-solving to ensure your infrastructure is future-proof and ahead of the curve.</p>
+              <p class="text-slate-300">We don't just maintain the status quo; we proactively integrate emerging technologies and creative problem-solving to ensure your infrastructure is future-proof and ahead of the curve.</p>
           </div>
       </div>
   </div>
@@ -121,14 +148,13 @@
     <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out" style="transform: translateX(0%);">
     
         <figure class="w-full shrink-0 text-center px-2 sm:px-6">
-          <svg class="h-10 mx-auto mb-3 text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="h-10 mx-auto mb-3 text-isaac-orange" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
           </svg> 
           <blockquote>
               <p class="w-full max-w-3xl mx-auto text-base md:text-2xl font-medium text-white">"Company reliable technology partner for our organization. Their IT Shared Services approach helped streamline our day-to-day IT operations, improve system reliability, and reduce downtime across multiple departments."</p>
           </blockquote>
           <figcaption class="flex flex-col sm:flex-row items-center justify-center mt-6 space-y-2 sm:space-y-0 sm:space-x-3">
-              <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png" alt="profile picture">
               <div class="flex items-center divide-x-2 divide-gray-700">
                   <div class="pr-3 font-medium text-white text-sm md:text-base">Operations Manager</div>
                   <div class="pl-3 text-xs md:text-sm font-light text-gray-400">Gulf Oil Philippines</div>
@@ -137,14 +163,13 @@
         </figure>
 
         <figure class="w-full shrink-0 text-center px-2 sm:px-6">
-          <svg class="h-10 mx-auto mb-3 text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="h-10 mx-auto mb-3 text-isaac-orange" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
           </svg> 
           <blockquote>
               <p class="w-full max-w-3xl mx-auto text-base md:text-2xl font-medium text-white">"Partnering with ISAAC IT Services significantly strengthened our cybersecurity posture. Their Cybersecurity Team-as-a-Service provided us with access to experienced security professionals."</p>
           </blockquote>
           <figcaption class="flex flex-col sm:flex-row items-center justify-center mt-6 space-y-2 sm:space-y-0 sm:space-x-3">
-              <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png" alt="profile picture">
               <div class="flex items-center divide-x-2 divide-gray-700">
                   <div class="pr-3 font-medium text-white text-sm md:text-base">Operations Manager</div>
                   <div class="pl-3 text-xs md:text-sm font-light text-gray-400">Materials Solutions Inc.</div>
@@ -153,14 +178,13 @@
         </figure>
 
          <figure class="w-full shrink-0 text-center px-2 sm:px-6">
-          <svg class="h-10 mx-auto mb-3 text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="h-10 mx-auto mb-3 text-isaac-orange" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
           </svg> 
           <blockquote>
               <p class="w-full max-w-3xl mx-auto text-base md:text-2xl font-medium text-white">"ISAAC IT Services successfully delivered automation and custom solutions that improved our operational efficiency and reporting processes."</p>
           </blockquote>
           <figcaption class="flex flex-col sm:flex-row items-center justify-center mt-6 space-y-2 sm:space-y-0 sm:space-x-3">
-              <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png" alt="profile picture">
               <div class="flex items-center divide-x-2 divide-gray-700">
                   <div class="pr-3 font-medium text-white text-sm md:text-base">CIO</div>
                   <div class="pl-3 text-xs md:text-sm font-light text-gray-400">Kennemer Group</div>
@@ -169,14 +193,13 @@
         </figure>
 
          <figure class="w-full shrink-0 text-center px-2 sm:px-6">
-          <svg class="h-10 mx-auto mb-3 text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="h-10 mx-auto mb-3 text-isaac-orange " viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
           </svg> 
           <blockquote>
               <p class="w-full max-w-3xl mx-auto text-base md:text-2xl font-medium text-white">"ISAAC IT Services provided us with excellent SOC Managed Services support, giving our organization 24/7 visibility into security threats."</p>
           </blockquote>
           <figcaption class="flex flex-col sm:flex-row items-center justify-center mt-6 space-y-2 sm:space-y-0 sm:space-x-3">
-              <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png" alt="profile picture">
               <div class="flex items-center divide-x-2 divide-gray-700">
                   <div class="pr-3 font-medium text-white text-sm md:text-base">CISO</div>
                   <div class="pl-3 text-xs md:text-sm font-light text-gray-400">Chryschem</div>
@@ -192,14 +215,14 @@
 </div>  
 </section>
 
-<section id="about" class="bg-isaac-dark">
-    <div class="gap-8 items-center py-12 px-6 mx-auto max-w-screen-xl md:grid md:grid-cols-2 lg:px-6">
-        <img class="w-full rounded-2xl mb-6 md:mb-0" src="../src/graphic1.png" alt="company image">
-        <div>
+<section id="about" class="bg-isaac-dark mx-5">
+    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+        <img class="w-full" src="../src/graphic1.png" alt="company image">
+        <div class="mt-4 md:mt-0">
             <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-white">Driving Efficiency in Humanitarian Response Through BI Solutions</h2>
-            <p class="mb-6 font-light text-slate-400 text-sm md:text-lg">
+            <p class="mb-6 font-light text-slate-400 md:text-lg">Driving Efficiency in Humanitarian Response Through BI Solutions
             ISAAC IT Services partnered with a leading NGO to create a BI dashboard that tracked typhoon relief efforts. By cleansing and integrating data from multiple sources, the team delivered real-time insights on resource allocation, relief effectiveness, and respondent preferences. The solution empowered the NGO to make faster, data-informed decisions and improve the impact of future disaster responses.</p>
-            <a href="#" class="inline-flex items-center text-isaac-dark bg-isaac-orange hover:brightness-110 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-all w-full sm:w-auto justify-center">
+            <a href="#contact" class="inline-flex items-center text-isaac-dark bg-isaac-orange hover:brightness-110 font-bold rounded-lg text-sm px-5 py-2.5 text-center transition-all">
                 Know more
                 <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </a>
@@ -208,194 +231,268 @@
 </section>
 
 <section id="services" class="bg-isaac-dark">
-  <div class="py-12 px-6 mx-auto max-w-screen-xl">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       <div class="max-w-screen-md mb-8 lg:mb-16">
-          <h2 class="mb-4 text-3xl md:text-4xl tracking-tight font-extrabold text-white">Our Core Service Domains</h2>
-          <p class="text-isaac-orange text-base sm:text-xl">Tailored IT and digital solutions designed to accelerate transformation and drive growth within the Philippine business environment.</p>
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white ">Our Core Service Domains</h2>
+          <p class="text-isaac-orange sm:text-xl">Tailored IT and digital solutions designed to accelerate transformation and drive growth within the Philippine business environment.</p>
       </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5">
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-900">
-                  <svg class="w-5 h-5 text-isaac-orange" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+      <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+          <!-- 1. IT Solutions Delivery -->
+          <div class="bg-isaac-grey px-5 py-6 rounded-2xl">
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange lg:h-12 lg:w-12">
+                  <svg class="w-5 h-5 text-isaac-dark lg:w-6 lg:h-6 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold text-white">IT Solutions Delivery</h3>
-              <p class="text-gray-400 text-sm">Custom Web & Mobile App development, Cloud Migration (Azure/AWS/GCP), and ERP/CRM implementations including Salesforce and Zoho.</p>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">IT Solutions Delivery</h3>
+              <p class="text-gray-500 dark:text-gray-400">Custom Web & Mobile App development, Cloud Migration (Azure/AWS/GCP), and ERP/CRM implementations including Salesforce and Zoho.</p>
           </div>
 
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5">
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-900">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-isaac-orange">
-                    <path fill-rule="evenodd" d="M7.5 5.25a3 3 0 0 1 3-3h3a3 3 0 0 1 3 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0 1 12 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 0 1 7.5 5.455V5.25Zm7.5 0v.09a49.488 49.488 0 0 0-6 0v-.09a1.5 1.5 0 0 1 1.5-1.5h3a1.5 1.5 0 0 1 1.5 1.5Zm-3 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+          <!-- 2. Business Intelligence -->
+          <div class="bg-isaac-grey px-5 py-6 rounded-2xl">
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange lg:h-12 lg:w-12 dark:bg-primary-900">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 text-isaac-dark h-5 lg:w-6 lg:h-6 dark:text-primary-300"">
+                    <path fillRule="evenodd" d="M7.5 5.25a3 3 0 0 1 3-3h3a3 3 0 0 1 3 3v.205c.933.085 1.857.197 2.774.334 1.454.218 2.476 1.483 2.476 2.917v3.033c0 1.211-.734 2.352-1.936 2.752A24.726 24.726 0 0 1 12 15.75c-2.73 0-5.357-.442-7.814-1.259-1.202-.4-1.936-1.541-1.936-2.752V8.706c0-1.434 1.022-2.7 2.476-2.917A48.814 48.814 0 0 1 7.5 5.455V5.25Zm7.5 0v.09a49.488 49.488 0 0 0-6 0v-.09a1.5 1.5 0 0 1 1.5-1.5h3a1.5 1.5 0 0 1 1.5 1.5Zm-3 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clipRule="evenodd" />
                     <path d="M3 18.4v-2.796a4.3 4.3 0 0 0 .713.31A26.226 26.226 0 0 0 12 17.25c2.892 0 5.68-.468 8.287-1.335.252-.084.49-.189.713-.311V18.4c0 1.452-1.047 2.728-2.523 2.923-2.12.282-4.282.427-6.477.427a49.19 49.19 0 0 1-6.477-.427C4.047 21.128 3 19.852 3 18.4Z" />
                 </svg>
+
             </div>
-              <h3 class="mb-2 text-xl font-bold text-white">Business Intelligence</h3>
-              <p class="text-gray-400 text-sm">Power BI dashboards, data warehousing, and predictive modeling for BPO, Finance, and Retail sectors.</p>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">Business Intelligence</h3>
+              <p class="text-gray-500 dark:text-gray-400">Power BI dashboards, data warehousing, and predictive modeling for BPO, Finance, and Retail sectors.</p>
           </div>
 
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5">
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-900">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-isaac-orange">
+          <!-- 3. Cybersecurity -->
+          <div class="bg-isaac-grey px-5 py-6 rounded-2xl">
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange lg:h-12 lg:w-12 dark:bg-primary-900">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-isaac-dark lg:w-6 lg:h-6 dark:text-primary-300">
                     <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clip-rule="evenodd" /></svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold text-white">Cybersecurity</h3>
-              <p class="text-gray-400 text-sm">VAPT, Managed SOC, and Compliance readiness for DPA, ISO 27001, and local NPC/BSP regulations.</p>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">Cybersecurity</h3>
+              <p class="text-gray-500 dark:text-gray-400">VAPT, Managed SOC, and Compliance readiness for DPA, ISO 27001, and local NPC/BSP regulations.</p>
           </div>
 
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5">
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-900">
-                  <svg class="w-5 h-5 text-isaac-orange" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+          <!-- 4. IT Operations -->
+          <div class="bg-isaac-grey px-5 py-6 rounded-2xl">
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange lg:h-12 lg:w-12 dark:bg-primary-900">
+                  <svg class="w-5 h-5 text-isaac-dark lg:w-6 lg:h-6 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold text-white">IT Operations (ITOps)</h3>
-              <p class="text-gray-400 text-sm">24/7 Infrastructure monitoring, Helpdesk as a Service, and full Microsoft 365/Azure administration.</p>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">IT Operations (ITOps)</h3>
+              <p class="text-gray-500 dark:text-gray-400">24/7 Infrastructure monitoring, Helpdesk as a Service, and full Microsoft 365/Azure administration.</p>
           </div>
 
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5">
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-900">
-                  <svg class="w-5 h-5 text-isaac-orange" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path><path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path></svg>
+          <!-- 5. Digital Marketing -->
+          <div class="bg-isaac-grey px-5 py-6 rounded-2xl">
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange lg:h-12 lg:w-12 dark:bg-primary-900">
+                  <svg class="w-5 h-5 text-isaac-dark lg:w-6 lg:h-6 dark:text-primary-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path><path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"></path></svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold text-white">Digital Marketing</h3>
-              <p class="text-gray-400 text-sm">Data-driven SEO, Social Media management, and specialized OFW-targeted or Real Estate campaigns.</p>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">Digital Marketing</h3>
+              <p class="text-gray-500 dark:text-gray-400">Data-driven SEO, Social Media management, and specialized OFW-targeted or Real Estate campaigns.</p>
           </div>
 
-          <div class="bg-isaac-grey/20 p-6 rounded-2xl border border-white/5">
-              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-isaac-orange"> <path fill-rule="evenodd" d="M10.5 3.798v5.02a3 3 0 0 1-.879 2.121l-2.377 2.377a9.845 9.845 0 0 1 5.091 1.013 8.315 8.315 0 0 0 5.713.636l.285-.071-3.954-3.955a3 3 0 0 1-.879-2.121v-5.02a23.614 23.614 0 0 0-3 0Zm4.5.138a.75.75 0 0 0 .093-1.495A24.837 24.837 0 0 0 12 2.25a25.048 25.048 0 0 0-3.093.191A.75.75 0 0 0 9 3.936v4.882a1.5 1.5 0 0 1-.44 1.06l-6.293 6.294c-1.62 1.621-.903 4.475 1.471 4.88 2.686.46 5.447.698 8.262.698 2.816 0 5.576-.239 8.262-.697 2.373-.406 3.092-3.26 1.47-4.881L15.44 9.879A1.5 1.5 0 0 1 15 8.818V3.936Z" clip-rule="evenodd" />
+          <!-- 6. AI Solutions -->
+          <div class="bg-isaac-grey px-5 py-6 rounded-2xl">
+              <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-isaac-orange lg:h-12 lg:w-12 dark:bg-primary-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-isaac-dark lg:w-6 lg:h-6 dark:text-primary-300"> <path fill-rule="evenodd" d="M10.5 3.798v5.02a3 3 0 0 1-.879 2.121l-2.377 2.377a9.845 9.845 0 0 1 5.091 1.013 8.315 8.315 0 0 0 5.713.636l.285-.071-3.954-3.955a3 3 0 0 1-.879-2.121v-5.02a23.614 23.614 0 0 0-3 0Zm4.5.138a.75.75 0 0 0 .093-1.495A24.837 24.837 0 0 0 12 2.25a25.048 25.048 0 0 0-3.093.191A.75.75 0 0 0 9 3.936v4.882a1.5 1.5 0 0 1-.44 1.06l-6.293 6.294c-1.62 1.621-.903 4.475 1.471 4.88 2.686.46 5.447.698 8.262.698 2.816 0 5.576-.239 8.262-.697 2.373-.406 3.092-3.26 1.47-4.881L15.44 9.879A1.5 1.5 0 0 1 15 8.818V3.936Z" clip-rule="evenodd" />
                     </svg>
               </div>
-              <h3 class="mb-2 text-xl font-bold text-white">AI Solutions</h3>
-              <p class="text-gray-400 text-sm">Transform business processes with AI Chatbots, Intelligent Process Automation (IPA), and custom Machine Learning solutions.</p>
+              <h3 class="mb-2 text-xl font-bold dark:text-white">AI Solutions</h3>
+              <p class="text-gray-500 dark:text-gray-400">Transform business processes with AI Chatbots, Intelligent Process Automation (IPA), and custom Machine Learning solutions.</p>
           </div>
       </div>
   </div>
 </section>
 
-<section id="contact" class="flex flex-col lg:flex-row gap-8 px-6 py-16 max-w-screen-xl mx-auto">
-    <div class="flex-1 flex flex-col justify-center">
-        <h2 class="mb-4 text-3xl md:text-4xl tracking-tight font-extrabold text-white">Contact Us</h2>
-        <p class="mb-6 font-light text-slate-300 text-base sm:text-xl">Got a technical issue? Our team is ready to help.</p>
-        
-        <h3 class="font-bold text-lg text-isaac-orange">Find us at the office</h3>
-        <p class="mb-6 font-light text-slate-300 text-sm sm:text-base">12th-Floor Times Plaza Building, <br> UN Avenue Manila, <br> Metro Manila, Philippines</p>
-        
-        <h3 class="font-bold text-lg text-isaac-orange">Give us a ring</h3>
-        <p class="font-light text-slate-300 text-sm sm:text-base">+63 917 180 4518 <br> Monday–Friday, 8:00 AM – 5:00 PM (GMT+8)</p>
+<section id="contact" class="flex flex-col md:flex-row gap-8 p-8 bg-isaac-dark py-16">
+    <div class="flex-1 flex flex-col justify-center mx-5">
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">Contact Us</h2>
+        <p class="mb-4 lg:mb-16 font-light text-slate-300 sm:text-xl">Got a technical issue? Our team is ready to help.</p>
+        <h3 class="font-light sm:text-xl text-isaac-orange">Find us at the office</h3>
+        <p class="mb-4 lg:mb-16 font-light text-slate-300 sm:text-m">12th-Floor Times Plaza Building, <br> UN Avenue Manila, <br> Metro Manila, Philippines</p>
+        <h3 class="font-light sm:text-xl text-isaac-orange">Give us a ring</h3>
+        <p class="mb-4 lg:mb-16 font-light text-slate-300 sm:text-m">+63 917 180 4518 <br> Monday–Friday, 8:00 AM – 5:00 PM (GMT+8)</p>
     </div>
 
-    <div class="flex-1 w-full">
-	    <div class="py-8 px-6 sm:px-10 bg-isaac-grey rounded-3xl">
-		    <form id="contact-form" class="space-y-4">
-		        <h2 class="mb-2 text-2xl font-extrabold text-white text-center">Let's talk!</h2>
-		        <div>
-			        <label for="name" class="block mb-2 text-sm font-medium text-white">Your name</label>
-			        <input type="text" name="name" id="name" class="!bg-white border-slate-800 text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-isaac-orange focus:border-isaac-orange block w-full p-3" placeholder="John Doe" required>
-			    </div>
-			    <div>
-			        <label for="email" class="block mb-2 text-sm font-medium text-white">Your email</label>
-			        <input type="email" name="email" id="email" class="!bg-white border-slate-800 text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 block w-full p-3 outline-none placeholder-slate-500 transition-all" placeholder="name@company.com" required>
-			    </div>
-			    <div>
-			        <label for="subject" class="block mb-2 text-sm font-medium text-white">Subject</label>
-			        <input type="text" name="subject" id="subject" class="!bg-white border-slate-800 text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 block w-full p-3 outline-none placeholder-slate-500 transition-all" placeholder="How can we help?" required>
-			    </div>
-			    <div>
-			        <label for="message" class="block mb-2 text-sm font-medium text-white">Your message</label>
-			        <textarea id="message" name="message" rows="4" class="!bg-white border-slate-800 text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 block w-full p-3 outline-none placeholder-slate-500 transition-all" placeholder="Leave a comment..."></textarea>
-			    </div>
+    <div class="flex-1">
+    <div class="py-6 lg:py-8 px-10 mx-5 bg-isaac-grey rounded-3xl">
+    <form id="contact-form" class="space-y-3">
+        <h2 class="mb-4 text-2xl font-extrabold text-white text-center">Let's talk!</h2>
+        <div>
+        <label for="name" class="block mb-2 text-sm font-medium text-white">Your name</label>
+            <input type="text" name="name" id="name"
+            class="!bg-white border-slate-800 text-white !text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-isaac-orange focus:border-isaac-orange block w-full p-3"
+            placeholder="John Doe" required>
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-white">Your email</label>
+        <input type="email" name="email" id="email"
+          class="!bg-white border-slate-800 text-white !text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 block w-full p-3 outline-none placeholder-slate-500 transition-all"
+          placeholder="name@company.com" required>
+      </div>
+      <div>
+        <label for="subject" class="block mb-2 text-sm font-medium text-white">Subject</label>
+        <input type="text" name="subject" id="subject"
+          class="!bg-white border-slate-800 text-white !text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 block w-full p-3 outline-none placeholder-slate-500 transition-all"
+          placeholder="How can we help?" required>
+      </div>
+      <div>
+        <label for="message" class="block mb-2 text-sm font-medium text-white">Your message</label>
+        <textarea id="message" name="message" rows="6"
+          class="!bg-white border-slate-800 text-white !text-isaac-dark text-sm rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 block w-full p-3 outline-none placeholder-slate-500 transition-all"
+          placeholder="Leave a comment..."></textarea>
+      </div>
 
-			    <button type="submit" id="submit-btn" class="w-full py-3 px-5 text-sm font-bold text-center text-gray-100 !bg-isaac-orange rounded-lg hover:brightness-110 transition-all uppercase tracking-wider">
-			        Send message
-			    </button>
-			    <p id="form-msg" class="text-center text-sm mt-2"></p>
-		    </form>
-	    </div>
+      <button type="submit" id="submit-btn"
+        class="w-full py-3 px-5 text-sm font-bold text-center text-gray-100 !bg-isaac-orange rounded-lg hover:!bg-isaac-light !hover:text-white transition-colors duration-300 ease-in-out uppercase tracking-wider">
+        Send message
+      </button>
+      <p id="form-msg" class="text-center text-sm mt-2"></p>
+    </form>
     </div>
+  </div>
 </section>
 
-<footer class="p-6 bg-isaac-darker">
+<footer class="p-4 sm:p-6 bg-isaac-darker">
     <div class="mx-auto max-w-screen-xl">
-        <div class="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6">
-            <div>
+        <div class="md:flex md:justify-between">
+            <div class="mb-6 md:mb-0">
                 <a href="https://isaacitservices.com" class="flex items-center">
                     <img src="../src/logo.png" class="mr-3 h-8" alt="Company Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">ISAAC IT SERVICES</span>
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ISAAC IT SERVICES</span>
                 </a>
-                <div class="mt-4">
-                    <h2 class="mb-2 text-sm font-semibold text-white uppercase">Follow us</h2>
-                    <ul class="flex text-gray-400 gap-4">
-                        <li><a href="https://web.facebook.com/isaacitsolutions/" class="hover:underline">Facebook</a></li>
-                        <li><a href="https://www.linkedin.com/company/isaac-it-services" class="hover:underline">LinkedIn</a></li>
+                <div class="gap-8 sm:gap-6 mt-5">
+                    <h2 class="mb-3 mt-3 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
+                    <ul class="flex text-gray-600 dark:text-gray-400">
+                        <li class="mr-3">
+                            <a href="https://web.facebook.com/isaacitsolutions/" class="hover:underline ">Facebook</a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/company/isaac-it-services" class="hover:underline">LinkedIn</a>
+                        </li>
                     </ul>
                 </div>
             </div>
+            </div>
+            
         </div>
-        <hr class="border-gray-700 my-6" />
-        <div class="text-center sm:text-left">
-            <span class="text-sm text-gray-400">© 2022 <a href="https://isaacitservices.com" class="hover:underline">ISAAC IT Services</a>. All Rights Reserved.</span>
+        <hr class="border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://isaacitservices.com" class="hover:underline">ISAAC IT Services</a>. All Rights Reserved.
+            </span>
         </div>
     </div>
 </footer>
 
 <script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbxQuaj2l5TwrYNBpPFsaW8J8FDhk88gJeqfHxzfQg_jlrjO2IZZ4QSIRTb3p-9HEm9_/exec'
-  const form = document.getElementById('contact-form')
-  const btn = document.getElementById('submit-btn')
-  const msg = document.getElementById('form-msg')
+const scriptURL = 'https://script.google.com/a/macros/isaacitservices.com/s/AKfycbykRfUGPT0OQPP_gWf2MY4Cw7DWZSCvOCJVhZTj3Cj3LJ1Y7kXtz8sh_11n_FCCU5Q74A/exec';
+const form = document.getElementById('contact-form');
+const btn = document.getElementById('submit-btn');
+const msg = document.getElementById('form-msg');
 
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    btn.disabled = true
-    btn.textContent = 'Processing...'
-    msg.textContent = ''
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    msg.textContent = '';
 
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-      .then(() => {
-        msg.textContent = 'Inquiry received, thank you!'
-        msg.className = 'text-center text-sm mt-2 text-green-400'
-        form.reset()
-      })
-      .catch(error => {
-        console.error('Error!', error.message)
-        msg.textContent = 'Submission failed. Please try again.'
-        msg.className = 'text-center text-sm mt-2 text-red-400'
-      })
-      .finally(() => {
-        btn.disabled = false
-        btn.textContent = 'Send message'
-      })
-  })
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: new FormData(form) 
+    })
+    .then(response => response.json()) // Parse JSON response from the server
+    .then(data => {
+        if (data.status === 'success') {
+            msg.textContent = 'Inquiry received, thank you!';
+            msg.className = 'text-center text-sm mt-2 text-green-400';
+            form.reset();
+        } else {
+            throw new Error(data.message || 'Server error occurred.');
+        }
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        msg.textContent = 'Submission failed. Please try again.';
+        msg.className = 'text-center text-sm mt-2 text-red-400';
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Send message';
+    });
+});
 
-    const track = document.getElementById("carousel-track");
-    const nextBtn = document.getElementById("nextBtn");
-    const prevBtn = document.getElementById("prevBtn");
-    const slides = document.querySelectorAll('#carousel-track figure');
+const track = document.getElementById("carousel-track");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+const slides = document.querySelectorAll('#carousel-track figure');
 
-    let currentSlide = 0;
-    const totalSlides = slides.length;
+let currentSlide = 0;
+let time;
+const totalSlides = slides.length;
 
-    function moveSlide() {
-        let movement = currentSlide * 100;
-        track.style.transform = `translateX(-${movement}%)`;
+function moveSlide() {
+    let movement = currentSlide * 100;
+    track.style.transform = `translateX(-${movement}%)`;
+}
+
+// Single source of truth for moving forward
+function nextSlide() {
+    if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+    } else {
+        currentSlide = 0;
     }
+    moveSlide();
+}
 
-    nextBtn.addEventListener('click', () =>{
-        if (currentSlide < totalSlides-1) {
-            currentSlide++;
-        } else {
-            currentSlide = 0;
-        }
-        moveSlide();
-    });
+function prevSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+    } else {
+        currentSlide = totalSlides - 1;
+    }
+    moveSlide();
+}
 
-    prevBtn.addEventListener('click', () =>{
-        if (currentSlide > 0) {
-            currentSlide--;
-        } else {
-            currentSlide = totalSlides - 1;
-        }
-        moveSlide();
-    });
+// FIX: Just call nextSlide directly to avoid double-incrementing!
+nextBtn.addEventListener('click', () => {
+    nextSlide();
+    autoSlide();
+});
+
+prevBtn.addEventListener('click', () => {
+    prevSlide();
+    autoSlide();
+});
+
+function autoSlide() {
+    clearInterval(time);
+    time = setInterval(nextSlide, 3000); // 3 seconds interval
+}
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+track.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+track.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+}, { passive: true });
+
+function handleGesture() {
+    const swipeThreshold = 50; // Minimum drag pixels to trigger slide
+    if (touchStartX - touchEndX > swipeThreshold) {
+        // Swiped Left -> Show Next
+        nextSlide();
+        autoSlide();
+    } else if (touchEndX - touchStartX > swipeThreshold) {
+        // Swiped Right -> Show Prev
+        prevSlide();
+        autoSlide();
+    }
+}
+
+// Initial start
+autoSlide();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
