@@ -118,11 +118,6 @@ const organization = {
         width: 32rem; height: 32rem;
         background: radial-gradient(circle, rgba(165, 190, 230, .28) 0%, rgba(110, 145, 210, .12) 40%, transparent 68%);
     }
-    /* Drift uses `translate` (not `transform`) so it stacks with inline transforms on the glow */
-    @keyframes isaac-glow-float {
-        0%, 100% { translate: 0 -3rem; }
-        50% { translate: 0 3rem; }
-    }
     @keyframes isaac-glow-flicker {
         0%, 100% { opacity: 1; }
         8% { opacity: .55; }
@@ -137,14 +132,10 @@ const organization = {
     }
     @media (prefers-reduced-motion: no-preference) {
         .isaac-glow {
-            animation: isaac-glow-float 9s ease-in-out infinite, isaac-glow-flicker 4.3s linear infinite;
-            will-change: translate, opacity;
+            animation: isaac-glow-flicker 4.3s linear infinite;
+            will-change: transform, opacity;
         }
-        #about .isaac-glow { animation-delay: -3s, -1.4s; }
-        #services .isaac-glow { animation-delay: -6s, -2.9s; }
-        #contact .isaac-glow { animation-delay: -4.5s, -0.7s; }
-        /* Blue drifts on its own slower rhythm so the two colours never pulse in step */
-        .isaac-glow.isaac-glow--blue { animation-duration: 11s, 5.7s; animation-delay: -5.5s, -2.2s; }
+        .isaac-glow.isaac-glow--blue { animation-duration: 5.7s; animation-delay: -2.2s; }
     }
     .isaac-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(254, 163, 54, .6), transparent); }
 
@@ -325,6 +316,41 @@ if (document.documentElement.classList.contains('isaac-js')) {
         });
     }, { threshold: 0.15 });
     document.querySelectorAll('.isaac-card, .isaac-reveal').forEach((el) => revealObserver.observe(el));
+}
+
+// Random 2-D drift for the glow orbs (skipped when prefers-reduced-motion is set)
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    (function () {
+        // Each glow gets its own set of randomised oscillator parameters so
+        // no two orbs ever move in sync.
+        function rnd(min, max) { return min + Math.random() * (max - min); }
+
+        const glows = Array.from(document.querySelectorAll('.isaac-glow'));
+        const states = glows.map(function () {
+            return {
+                // X axis: two sine waves summed for a non-repeating Lissajous feel
+                ax1: rnd(28, 60),   freqX1: rnd(0.00018, 0.00035), phX1: rnd(0, Math.PI * 2),
+                ax2: rnd(14, 30),   freqX2: rnd(0.00009, 0.00020), phX2: rnd(0, Math.PI * 2),
+                // Y axis: independent pair
+                ay1: rnd(28, 60),   freqY1: rnd(0.00015, 0.00030), phY1: rnd(0, Math.PI * 2),
+                ay2: rnd(12, 26),   freqY2: rnd(0.00008, 0.00018), phY2: rnd(0, Math.PI * 2),
+            };
+        });
+
+        function tick(ts) {
+            glows.forEach(function (el, i) {
+                var s = states[i];
+                var x = s.ax1 * Math.sin(ts * s.freqX1 + s.phX1)
+                      + s.ax2 * Math.sin(ts * s.freqX2 + s.phX2);
+                var y = s.ay1 * Math.sin(ts * s.freqY1 + s.phY1)
+                      + s.ay2 * Math.sin(ts * s.freqY2 + s.phY2);
+                el.style.transform = (el.style.transform.replace(/translate\([^)]*\)\s*/g, '') || '')
+                    + 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px)';
+            });
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    })();
 }
 </script>
 </body>

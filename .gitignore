@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Large video assets - serve from CDN or local only
+src/HERO-COVER.mp4
+src/*.mp4
