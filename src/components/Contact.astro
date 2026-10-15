@@ -1,0 +1,96 @@
+<section id="contact" class="isaac-section bg-isaac-darker">
+  <div class="isaac-divider" style="position: absolute; top: 0; left: 0; right: 0;"></div>
+  <div class="isaac-grid-bg"></div>
+  <div class="isaac-glow" style="top: -12rem; right: -12rem; position: absolute;"></div>
+  <div class="isaac-glow isaac-glow--blue" style="bottom: -14rem; left: -12rem; position: absolute;"></div>
+  <div class="mx-auto max-w-screen-xl px-6 lg:px-8 py-16 lg:py-24 grid items-center gap-12 lg:grid-cols-2 xl:gap-16">
+    <div class="isaac-reveal">
+        <h2 class="mb-4 text-3xl md:text-5xl tracking-tight font-extrabold text-white">Contact Us</h2>
+        <p class="mb-10 text-slate-300 sm:text-xl">Got a technical issue? Our team is ready to help.</p>
+
+        <div class="isaac-info mb-8">
+        <h3 class="mb-1 text-lg font-bold text-isaac-orange">Find us at the office</h3>
+        <p class="text-slate-300">12th-Floor Times Plaza Building, <br> UN Avenue Manila, <br> Metro Manila, Philippines</p>
+        </div>
+
+        <div class="isaac-info">
+        <h3 class="mb-1 text-lg font-bold text-isaac-orange">Give us a ring</h3>
+        <p class="text-slate-300">+63 917 180 4518 <br> Monday–Friday, 8:00 AM – 5:00 PM (GMT+8)</p>
+        </div>
+    </div>
+
+    <div class="isaac-reveal p-6 sm:p-10 rounded-3xl border !border-white/10 bg-isaac-grey/30 backdrop-blur-[2px] shadow-2xl shadow-black/50">
+      <form id="contact-form" class="space-y-5">
+        <h3 class="text-2xl font-extrabold text-white text-center">Let's talk!</h3>
+        <div>
+          <label for="name" class="block mb-2 text-sm font-medium text-white">Your name</label>
+          <input type="text" name="name" id="name"
+            class="isaac-input"
+            placeholder="Juan dela Cruz" required>
+        </div>
+        <div>
+          <label for="email" class="block mb-2 text-sm font-medium text-white">Your email</label>
+          <input type="email" name="email" id="email"
+            class="isaac-input"
+            placeholder="name@company.com" required>
+        </div>
+        <div>
+          <label for="subject" class="block mb-2 text-sm font-medium text-white">Subject</label>
+          <input type="text" name="subject" id="subject"
+            class="isaac-input"
+            placeholder="How can we help?" required>
+        </div>
+        <div>
+          <label for="message" class="block mb-2 text-sm font-medium text-white">Your message</label>
+          <textarea id="message" name="message" rows="5"
+            class="isaac-input"
+            placeholder="Leave a comment..."></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn"
+          class="w-full py-3 px-5 text-sm font-bold text-center !text-isaac-dark !bg-isaac-orange rounded-lg transition hover:brightness-110 disabled:opacity-60 uppercase tracking-wider">
+          Send message
+        </button>
+        <p id="form-msg" class="text-center text-sm mt-2"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+const scriptURL = 'https://script.google.com/a/macros/isaacitservices.com/s/AKfycbykRfUGPT0OQPP_gWf2MY4Cw7DWZSCvOCJVhZTj3Cj3LJ1Y7kXtz8sh_11n_FCCU5Q74A/exec';
+const form = document.getElementById('contact-form');
+const btn = document.getElementById('submit-btn');
+const msg = document.getElementById('form-msg');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    msg.textContent = '';
+
+    fetch(scriptURL, {
+        method: 'POST',
+        body: new FormData(form)
+    })
+    .then(response => response.json()) // Parse JSON response from the server
+    .then(data => {
+        if (data.status === 'success') {
+            msg.textContent = 'Inquiry received, thank you!';
+            msg.className = 'text-center text-sm mt-2 text-green-400';
+            form.reset();
+        } else {
+            throw new Error(data.message || 'Server error occurred.');
+        }
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        msg.textContent = 'Submission failed. Please try again.';
+        msg.className = 'text-center text-sm mt-2 text-red-400';
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Send message';
+    });
+});
+</script>

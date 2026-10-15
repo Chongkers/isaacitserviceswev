@@ -1,0 +1,28 @@
+---
+import logo from '../logo.png';
+---
+
+<footer class="bg-isaac-dark">
+    <div class="isaac-divider"></div>
+    <div class="mx-auto max-w-screen-xl px-6 lg:px-8 py-10">
+        <div class="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+            <a href="https://isaacitservices.com" class="flex items-center">
+                <img src={logo.src} class="mr-3 h-8" alt="ISAAC IT Services logo" width="32" height="32" loading="lazy" />
+                <span class="self-center text-2xl font-black tracking-tighter uppercase whitespace-nowrap text-white">ISAAC IT <span class="text-isaac-orange">SERVICES</span></span>
+            </a>
+            <div>
+                <h2 class="mb-3 text-sm font-semibold uppercase text-white">Follow us</h2>
+                <ul class="flex gap-6 text-slate-300">
+                    <li>
+                        <a href="https://web.facebook.com/isaacitsolutions/" class="hover:text-isaac-orange transition-colors">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/company/isaac-it-services" class="hover:text-isaac-orange transition-colors">LinkedIn</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-8 !border-isaac-grey" />
+        <p class="text-sm text-slate-400">© {new Date().getFullYear()} <a href="https://isaacitservices.com" class="hover:underline">ISAAC IT Services</a>. All Rights Reserved.</p>
+    </div>
+</footer>

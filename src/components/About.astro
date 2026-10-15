@@ -1,0 +1,73 @@
+---
+import aboutChart from '../about-chart.mp4?url';
+
+// Every SVG dropped into src/assets/about/ becomes a slide, in filename order. Inlined so CSS can recolour it.
+const svgFiles = import.meta.glob<string>('../assets/about/*.svg', { query: '?raw', import: 'default', eager: true });
+const slides = Object.keys(svgFiles).sort().map((path) => svgFiles[path]);
+---
+
+<section id="about" class="isaac-section bg-isaac-darker">
+    <div class="mx-auto max-w-screen-xl px-6 lg:px-8 py-16 lg:py-24 grid items-center gap-10 lg:grid-cols-2 xl:gap-16">
+        <div class="isaac-reveal relative">
+            <div class="isaac-glow" style="top: 50%; left: 50%; transform: translate(-50%, -50%); position: absolute;"></div>
+            {slides.length > 0 ? (
+                <div id="about-carousel" class="isaac-illos" aria-hidden="true">
+                    {slides.map((svg, i) => (
+                        <div class:list={['isaac-illo', { 'is-active': i === 0 }]} set:html={svg} />
+                    ))}
+                </div>
+            ) : (
+                <video autoplay muted loop playsinline aria-hidden="true" class="relative w-full aspect-video object-cover rounded-2xl border !border-white/10 shadow-2xl shadow-black/60 pointer-events-none">
+                    <source src={aboutChart} type="video/mp4">
+                </video>
+            )}
+            {slides.length > 1 && <div id="about-carousel-dots" class="relative flex items-center justify-center gap-2 mt-4"></div>}
+        </div>
+        <div class="isaac-reveal">
+            <span class="isaac-eyebrow">About Us</span>
+            <h2 class="mb-4 text-3xl md:text-4xl tracking-tight font-extrabold text-white">Driving Efficiency in Humanitarian Response Through BI Solutions</h2>
+            <p class="mb-8 text-slate-300 md:text-lg">ISAAC IT Services partnered with a leading NGO to create a BI dashboard that tracked typhoon relief efforts. By cleansing and integrating data from multiple sources, the team delivered real-time insights on resource allocation, relief effectiveness, and respondent preferences. The solution empowered the NGO to make faster, data-informed decisions and improve the impact of future disaster responses.</p>
+            <a href="#contact" class="inline-flex items-center justify-center rounded-lg bg-isaac-orange px-6 py-3 text-base font-bold text-isaac-dark transition hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-isaac-orange/40">
+                Know more
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+(() => {
+    const carousel = document.getElementById('about-carousel');
+    const dotsWrap = document.getElementById('about-carousel-dots');
+    if (!carousel || !dotsWrap) return;
+    const slides = carousel.querySelectorAll('.isaac-illo');
+    let current = 0;
+    let timer;
+
+    const dots = Array.from(slides, (_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'isaac-dot';
+        dot.setAttribute('aria-label', `Illustration ${i + 1}`);
+        dot.addEventListener('click', () => { show(i); restart(); });
+        dotsWrap.appendChild(dot);
+        return dot;
+    });
+
+    function show(i) {
+        current = (i + slides.length) % slides.length;
+        slides.forEach((s, n) => s.classList.toggle('is-active', n === current));
+        dots.forEach((d, n) => d.classList.toggle('is-active', n === current));
+    }
+
+    function restart() {
+        clearInterval(timer);
+        timer = setInterval(() => show(current + 1), 4500);
+    }
+
+    carousel.parentElement.addEventListener('mouseenter', () => clearInterval(timer));
+    carousel.parentElement.addEventListener('mouseleave', restart);
+    show(0);
+    restart();
+})();
+</script>

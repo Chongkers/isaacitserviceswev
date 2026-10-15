@@ -1,5 +1,5 @@
 {
-  "name": "irregular-inclination",
+  "name": "isaac-it-services-website",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.8"
   }
 }

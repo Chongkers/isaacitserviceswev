@@ -1,0 +1,73 @@
+---
+// Served straight from public/ (see ASSETS.md for source and licence)
+const heroVideo = "/hex-orange-black.mp4";
+---
+
+<section
+    class="relative min-h-svh flex items-center justify-center bg-isaac-dark overflow-hidden"
+>
+    <video
+        autoplay
+        muted
+        loop
+        playsinline
+        id="bg-video"
+        poster="/hex-poster.jpg"
+        aria-hidden="true"
+        class="absolute top-0 left-0 w-full h-full object-cover z-0 pointer-events-none"
+        style="filter: brightness(0.45);"
+    >
+        <source src={heroVideo} type="video/mp4" />
+    </video>
+    <!-- Darkens the centre so the white and orange headline stays readable over the bright orange tiles -->
+    <div
+        class="absolute inset-0 z-0 pointer-events-none"
+        style="background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(0, 0, 0, .7), rgba(0, 0, 0, .25) 70%, transparent);"
+    >
+    </div>
+    <div
+        class="absolute inset-x-0 bottom-0 h-40 z-0 pointer-events-none"
+        style="background: linear-gradient(to bottom, transparent, #1f1f1f);"
+    >
+    </div>
+
+    <div
+        class="relative z-10 mx-auto w-full max-w-screen-xl px-6 lg:px-8 py-24 text-center flex flex-col items-center"
+    >
+        <h1
+            class="mb-4 text-5xl font-extrabold tracking-tight leading-none md:text-7xl text-white uppercase"
+        >
+            ISAAC IT <span class="text-isaac-orange">SERVICES</span>
+        </h1>
+
+        <p class="max-w-2xl text-xl md:text-2xl text-slate-100">
+            Empowering Philippine Businesses Through <br
+                class="hidden sm:block"
+            /> Intelligent and Secure{" "}
+            <span class="text-rotate text-isaac-orange font-semibold">
+                <span>
+                    <span>Solutions</span>
+                    <span>Infrastructure</span>
+                    <span>Innovation</span>
+                </span>
+            </span>
+        </p>
+
+        <a
+            href="#info"
+            class="isaac-btn-outline mt-10 !rounded-full"
+        >
+            Learn more
+            <svg
+                class="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                ><path
+                    fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path></svg
+            >
+        </a>
+    </div>
+</section>
