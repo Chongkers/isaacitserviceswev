@@ -90,7 +90,7 @@ const organization = {
     /* Shared section styling. Plain CSS (not utilities) so it wins over the Flowbite/daisyUI resets. */
     /* Large monitors: grow the root size so the whole rem-based layout (text, spacing, the max-w-screen-xl
        container) scales up instead of leaving a small 1280px column. 16px up to 1600px wide, capped at 20px. */
-    html { font-size: clamp(16px, calc(16px + (100vw - 1600px) * .004), 20px); }
+    html { font-size: clamp(14.4px, calc(14.4px + (100vw - 1600px) * .0036), 18px); }
 
     /* Tablet: an odd last card in a 2-column grid spans the full row instead of sitting alone */
     @media (min-width: 768px) and (max-width: 1023.98px) {
@@ -108,34 +108,11 @@ const organization = {
         -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 20%, transparent 75%);
         mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 20%, transparent 75%);
     }
+    /* Orange ambient glow — sits in the corner of each section */
     .isaac-glow {
         position: absolute; pointer-events: none; border-radius: 9999px;
-        width: 38rem; height: 38rem; filter: blur(40px);
-        background: radial-gradient(circle, rgba(254, 163, 54, .34) 0%, rgba(254, 163, 54, .12) 40%, transparent 68%);
-    }
-    /* Cool counterpart to the orange: a grey-tinted light blue (#A5BEE6 core fading to #6E91D2), opposite #FEA336 on the colour wheel */
-    .isaac-glow.isaac-glow--blue {
-        width: 32rem; height: 32rem;
-        background: radial-gradient(circle, rgba(165, 190, 230, .28) 0%, rgba(110, 145, 210, .12) 40%, transparent 68%);
-    }
-    @keyframes isaac-glow-flicker {
-        0%, 100% { opacity: 1; }
-        8% { opacity: .55; }
-        12% { opacity: .95; }
-        20% { opacity: .4; }
-        27% { opacity: .9; }
-        45% { opacity: .7; }
-        52% { opacity: 1; }
-        63% { opacity: .5; }
-        70% { opacity: .85; }
-        84% { opacity: .6; }
-    }
-    @media (prefers-reduced-motion: no-preference) {
-        .isaac-glow {
-            animation: isaac-glow-flicker 4.3s linear infinite;
-            will-change: transform, opacity;
-        }
-        .isaac-glow.isaac-glow--blue { animation-duration: 5.7s; animation-delay: -2.2s; }
+        width: 48rem; height: 48rem; filter: blur(60px);
+        background: radial-gradient(circle, rgba(254, 163, 54, .22) 0%, rgba(254, 163, 54, .07) 45%, transparent 70%);
     }
     .isaac-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(254, 163, 54, .6), transparent); }
 
@@ -289,6 +266,27 @@ const organization = {
     /* Scroll reveal: only hidden once the script has confirmed it will reveal them. */
     .isaac-js .isaac-card:not(.is-in), .isaac-js .isaac-reveal:not(.is-in) { opacity: 0; transform: translateY(18px); }
     .isaac-reveal { transition: opacity .6s ease, transform .6s ease; }
+
+    /* ── Grid cascade (Values & Services) ────────────────────────────────────── */
+    @keyframes isaac-card-cascade {
+        from { opacity: 0; transform: translateY(44px) scale(.97); filter: blur(4px); }
+        to   { opacity: 1; transform: none;                        filter: blur(0); }
+    }
+    /* Cards are invisible until the JS grid observer fires */
+    .isaac-js [data-scroll-grid] > .isaac-card { opacity: 0; }
+    /* Once the container is seen, each card plays the cascade animation */
+    [data-scroll-grid].is-in > .isaac-card {
+        animation: isaac-card-cascade .6s cubic-bezier(.22, 1, .36, 1) both;
+    }
+    /* Section heading reveal: eyebrow, h2, p animate in sequence */
+    @keyframes isaac-heading-slide {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: none; }
+    }
+    .isaac-js [data-scroll-heading] > * { opacity: 0; }
+    [data-scroll-heading].is-in > :nth-child(1) { animation: isaac-heading-slide .5s cubic-bezier(.22,1,.36,1) .05s both; }
+    [data-scroll-heading].is-in > :nth-child(2) { animation: isaac-heading-slide .55s cubic-bezier(.22,1,.36,1) .15s both; }
+    [data-scroll-heading].is-in > :nth-child(3) { animation: isaac-heading-slide .55s cubic-bezier(.22,1,.36,1) .25s both; }
     </style>
     <script is:inline>
     if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -316,41 +314,31 @@ if (document.documentElement.classList.contains('isaac-js')) {
         });
     }, { threshold: 0.15 });
     document.querySelectorAll('.isaac-card, .isaac-reveal').forEach((el) => revealObserver.observe(el));
-}
 
-// Random 2-D drift for the glow orbs (skipped when prefers-reduced-motion is set)
-if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    (function () {
-        // Each glow gets its own set of randomised oscillator parameters so
-        // no two orbs ever move in sync.
-        function rnd(min, max) { return min + Math.random() * (max - min); }
-
-        const glows = Array.from(document.querySelectorAll('.isaac-glow'));
-        const states = glows.map(function () {
-            return {
-                // X axis: two sine waves summed for a non-repeating Lissajous feel
-                ax1: rnd(28, 60),   freqX1: rnd(0.00018, 0.00035), phX1: rnd(0, Math.PI * 2),
-                ax2: rnd(14, 30),   freqX2: rnd(0.00009, 0.00020), phX2: rnd(0, Math.PI * 2),
-                // Y axis: independent pair
-                ay1: rnd(28, 60),   freqY1: rnd(0.00015, 0.00030), phY1: rnd(0, Math.PI * 2),
-                ay2: rnd(12, 26),   freqY2: rnd(0.00008, 0.00018), phY2: rnd(0, Math.PI * 2),
-            };
-        });
-
-        function tick(ts) {
-            glows.forEach(function (el, i) {
-                var s = states[i];
-                var x = s.ax1 * Math.sin(ts * s.freqX1 + s.phX1)
-                      + s.ax2 * Math.sin(ts * s.freqX2 + s.phX2);
-                var y = s.ay1 * Math.sin(ts * s.freqY1 + s.phY1)
-                      + s.ay2 * Math.sin(ts * s.freqY2 + s.phY2);
-                el.style.transform = (el.style.transform.replace(/translate\([^)]*\)\s*/g, '') || '')
-                    + 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px)';
+    // ── Grid cascade observer (Values & Services headings + card grids) ──────
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const grid = entry.target;
+            grid.classList.add('is-in');
+            // Apply staggered animation-delay to each card child
+            Array.from(grid.children).forEach((card, i) => {
+                card.style.animationDelay = (i * 100) + 'ms';
             });
-            requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-    })();
+            gridObserver.unobserve(grid);
+        });
+    }, { threshold: 0.08 });
+
+    const headingObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-in');
+            headingObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('[data-scroll-grid]').forEach((el) => gridObserver.observe(el));
+    document.querySelectorAll('[data-scroll-heading]').forEach((el) => headingObserver.observe(el));
 }
 </script>
 </body>
