@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+@theme {
+    --color-isaac-light: #597072;
+    --color-isaac-dark: #1f1f1f;
+    --color-isaac-orange: #FEA336;
+    --color-isaac-grey: #323a3b;
+    --color-isaac-darker: #262929;
+}
+
+/* Shared section styling. Plain (unlayered) CSS, so it wins over Tailwind utilities. */
+/* Large monitors: grow the root size so the whole rem-based layout (text, spacing, the max-w-screen-xl
+   container) scales up instead of leaving a small 1280px column. 16px up to 1600px wide, capped at 20px. */
+html { font-size: clamp(14.4px, calc(14.4px + (100vw - 1600px) * .0036), 18px); }
+
+/* Tablet: an odd last card in a 2-column grid spans the full row instead of sitting alone */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+    .isaac-balance > :last-child:nth-child(odd) { grid-column: span 2; }
+}
+
+.isaac-section { position: relative; overflow: hidden; }
+.isaac-section > * { position: relative; }
+
+.isaac-grid-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    /* Honeycomb tile: one pointy-top hexagon (side 28) plus the stem linking it to the row below */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48.497' height='84' viewBox='0 0 48.497 84'%3E%3Cpath d='M24.249 0L48.497 14V42L24.249 56L0 42V14Z M24.249 56V84' fill='none' stroke='white' stroke-opacity='.07' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 48.497px 84px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 20%, transparent 75%);
+}
+/* Orange ambient glow — sits in the corner of each section */
+.isaac-glow {
+    position: absolute; pointer-events: none; border-radius: 9999px;
+    width: 48rem; height: 48rem; filter: blur(60px);
+    background: radial-gradient(circle, rgba(254, 163, 54, .22) 0%, rgba(254, 163, 54, .07) 45%, transparent 70%);
+}
+.isaac-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(254, 163, 54, .6), transparent); }
+
+.isaac-eyebrow {
+    display: inline-flex; align-items: center; gap: .75rem; margin-bottom: 1rem;
+    font-size: .8rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #FEA336;
+}
+.isaac-eyebrow::before { content: ''; width: 2rem; height: 2px; background: #FEA336; }
+
+.isaac-card {
+    position: relative; overflow: hidden; border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, .08);
+    background: linear-gradient(160deg, rgba(50, 58, 59, .75), rgba(38, 41, 41, .55));
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease, opacity .6s ease;
+}
+.isaac-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #FEA336, transparent);
+    transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+}
+.isaac-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(254, 163, 54, .5);
+    box-shadow: 0 24px 48px -24px rgba(254, 163, 54, .35);
+}
+.isaac-card:hover::before { transform: scaleX(1); }
+
+.isaac-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 3rem; height: 3rem; margin-bottom: 1.25rem; border-radius: .75rem;
+    color: #FEA336; background: rgba(254, 163, 54, .1); border: 1px solid rgba(254, 163, 54, .3);
+    transition: background-color .3s ease, color .3s ease;
+}
+.isaac-card:hover .isaac-icon { background: #FEA336; color: #1f1f1f; }
+
+.isaac-info { padding: .25rem 0 .25rem 1.25rem; border-left: 2px solid #FEA336; }
+
+input.isaac-input, textarea.isaac-input {
+    display: block; width: 100%; padding: .8rem 1rem; font-size: .9rem; color: #fff;
+    background: rgba(0, 0, 0, .3); border: 1px solid rgba(255, 255, 255, .12); border-radius: .6rem;
+    outline: none; transition: border-color .2s ease, box-shadow .2s ease;
+}
+input.isaac-input::placeholder, textarea.isaac-input::placeholder { color: #7c8a8c; }
+input.isaac-input:focus, textarea.isaac-input:focus {
+    border-color: #FEA336; box-shadow: 0 0 0 3px rgba(254, 163, 54, .25);
+}
+
+.isaac-dot {
+    width: .5rem; height: .5rem; border-radius: 9999px; background: rgba(255, 255, 255, .25);
+    transition: width .3s ease, background-color .3s ease;
+}
+.isaac-dot.is-active { width: 1.75rem; background: #FEA336; }
+
+.isaac-btn-outline {
+    display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+    padding: .9rem 2rem; border-radius: .6rem;
+    font-size: 1.125rem; font-weight: 700; letter-spacing: .02em; line-height: 1;
+    color: #FEA336; background: transparent; border: 2px solid #FEA336;
+    transition: background-color .25s ease, color .25s ease, box-shadow .25s ease;
+}
+.isaac-btn-outline:hover, .isaac-btn-outline:focus-visible {
+    background: #FEA336; color: #1f1f1f; outline: none;
+    box-shadow: 0 0 0 4px rgba(254, 163, 54, .25), 0 12px 32px -12px rgba(254, 163, 54, .6);
+}
+.isaac-btn-outline svg { transition: transform .25s ease; }
+.isaac-btn-outline:hover svg { transform: translateX(3px); }
+
+/* Service cards: the whole card opens its modal; the expand icon shows on hover */
+.isaac-card[data-service] { cursor: pointer; }
+.isaac-expand {
+    position: absolute; top: 1rem; right: 1rem; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    width: 2.25rem; height: 2.25rem; border-radius: .5rem;
+    color: #FEA336; background: rgba(254, 163, 54, .1); border: 1px solid rgba(254, 163, 54, .35);
+    opacity: 0; transform: scale(.85);
+    transition: opacity .25s ease, transform .25s ease, background-color .25s ease, color .25s ease;
+}
+.isaac-card:hover .isaac-expand, .isaac-expand:focus-visible { opacity: 1; transform: scale(1); }
+.isaac-expand:hover, .isaac-expand:focus-visible { background: #FEA336; color: #1f1f1f; outline: none; }
+@media (hover: none) { .isaac-expand { opacity: 1; transform: none; } }
+
+dialog.isaac-modal {
+    /* Must stay fixed: `.isaac-section > *` would otherwise make it relative and the page jumps to the top on open */
+    position: fixed; inset: 0;
+    width: min(44rem, calc(100vw - 2rem));
+    scrollbar-width: thin; scrollbar-color: rgba(254, 163, 54, .4) transparent; max-height: calc(100dvh - 2rem); margin: auto; padding: 0;
+    color: #fff; border-radius: 1.25rem; border: 1px solid rgba(254, 163, 54, .35);
+    background: linear-gradient(160deg, #323a3b, #262929);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8), 0 0 60px -20px rgba(254, 163, 54, .35);
+}
+dialog.isaac-modal::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(6px); }
+dialog.isaac-modal[open] { animation: isaac-modal-in .3s ease; }
+dialog.isaac-modal[open]::backdrop { animation: isaac-fade-in .3s ease; }
+@keyframes isaac-modal-in { from { opacity: 0; transform: translateY(16px) scale(.96); } }
+@keyframes isaac-fade-in { from { opacity: 0; } }
+.isaac-modal .isaac-icon { width: 3.5rem; height: 3.5rem; }
+.isaac-modal-list { display: grid; gap: .75rem; }
+.isaac-modal-list li {
+    position: relative; padding: .85rem 1rem .85rem 2.6rem; border-radius: .75rem;
+    background: rgba(0, 0, 0, .2); border: 1px solid rgba(255, 255, 255, .06); color: #e2e8f0;
+}
+.isaac-modal-list li::before {
+    content: ''; position: absolute; left: 1rem; top: 1.3rem; width: .6rem; height: .6rem;
+    background: #FEA336; transform: rotate(45deg); border-radius: 2px;
+}
+.isaac-modal-note { margin-top: 1rem; font-size: .95rem; color: #94a3b8; }
+.isaac-modal-quote {
+    margin-top: 1.5rem; padding: 1rem 1.25rem; border-left: 2px solid #FEA336;
+    background: rgba(254, 163, 54, .06); border-radius: 0 .75rem .75rem 0;
+}
+.isaac-modal-quote p { font-style: italic; color: #f1f5f9; }
+.isaac-modal-quote footer { margin-top: .5rem; font-size: .875rem; color: #94a3b8; }
+.isaac-modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    width: 2.25rem; height: 2.25rem; border-radius: .5rem; color: #cbd5e1;
+    transition: background-color .2s ease, color .2s ease;
+}
+.isaac-modal-close:hover, .isaac-modal-close:focus-visible { background: rgba(255, 255, 255, .08); color: #fff; outline: none; }
+
+/* About carousel: transparent, crossfading illustrations floating over the orange glow */
+.isaac-illos { position: relative; aspect-ratio: 4 / 3; }
+.isaac-illo {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 1rem;
+    opacity: 0; transform: translateX(28px) scale(.96); pointer-events: none;
+    transition: opacity .8s ease, transform .8s ease;
+}
+.isaac-illo.is-active { opacity: 1; transform: none; }
+.isaac-illo svg { width: 100%; height: 100%; filter: drop-shadow(0 24px 40px rgba(0, 0, 0, .45)); }
+@keyframes isaac-illo-float {
+    0%, 100% { translate: 0 -8px; }
+    50% { translate: 0 8px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .isaac-illo svg { animation: isaac-illo-float 6s ease-in-out infinite; }
+}
+/* Retheme unDraw's light-background palette for the dark site (fills are attributes, so CSS can override them) */
+/* Accent */
+.isaac-illo [fill="#6c63ff" i] { fill: #FEA336; }
+/* Screens and page surfaces become dark panels */
+.isaac-illo [fill="#fff" i], .isaac-illo [fill="#ffffff" i] { fill: #2b3132; }
+.isaac-illo [fill="#f2f2f2" i], .isaac-illo [fill="#f1f1f1" i] { fill: #3a4344; }
+/* Gridlines, placeholder bars and title bars become mid grey so they still read on dark */
+.isaac-illo [fill="#e6e6e6" i], .isaac-illo [fill="#e5e5e5" i], .isaac-illo [fill="#e4e4e4" i],
+.isaac-illo [fill="#ccc" i], .isaac-illo [fill="#cacaca" i], .isaac-illo [fill="#d6d6e3" i], .isaac-illo [fill="#b6b3c5" i] { fill: #5f6b6d; }
+/* Dark line work (chart lines, device frames, clothing) flips to light so it stays visible */
+.isaac-illo [fill="#090814" i] { fill: #dbe2ea; }
+.isaac-illo [fill="#3f3d56" i] { fill: #a3b0ba; }
+.isaac-illo [fill="#2f2e41" i] { fill: #7d8a93; }
+
+/* Scroll reveal: only hidden once the script has confirmed it will reveal them. */
+.isaac-js .isaac-card:not(.is-in), .isaac-js .isaac-reveal:not(.is-in) { opacity: 0; transform: translateY(18px); }
+.isaac-reveal { transition: opacity .6s ease, transform .6s ease; }
+
+/* ── Grid cascade (Values & Services) ────────────────────────────────────── */
+@keyframes isaac-card-cascade {
+    from { opacity: 0; transform: translateY(44px) scale(.97); filter: blur(4px); }
+    to   { opacity: 1; transform: none;                        filter: blur(0); }
+}
+/* Cards are invisible until the JS grid observer fires */
+.isaac-js [data-scroll-grid] > .isaac-card { opacity: 0; }
+/* Once the container is seen, each card plays the cascade animation */
+[data-scroll-grid].is-in > .isaac-card {
+    animation: isaac-card-cascade .6s cubic-bezier(.22, 1, .36, 1) both;
+}
+/* Section heading reveal: eyebrow, h2, p animate in sequence */
+@keyframes isaac-heading-slide {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+}
+.isaac-js [data-scroll-heading] > * { opacity: 0; }
+[data-scroll-heading].is-in > :nth-child(1) { animation: isaac-heading-slide .5s cubic-bezier(.22,1,.36,1) .05s both; }
+[data-scroll-heading].is-in > :nth-child(2) { animation: isaac-heading-slide .55s cubic-bezier(.22,1,.36,1) .15s both; }
+[data-scroll-heading].is-in > :nth-child(3) { animation: isaac-heading-slide .55s cubic-bezier(.22,1,.36,1) .25s both; }
+
+/* Hero rotating word (replaces daisyUI's text-rotate): a one-line window that steps through three words */
+.text-rotate { display: inline-flex; vertical-align: bottom; height: 1lh; overflow: hidden; }
+.text-rotate > span { display: flex; flex-direction: column; }
+.text-rotate > span > span { height: 1lh; }
+@keyframes isaac-text-rotate {
+    0%, 28% { transform: translateY(0); }
+    33%, 61% { transform: translateY(-33.333%); }
+    66%, 94% { transform: translateY(-66.666%); }
+    100% { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .text-rotate > span { animation: isaac-text-rotate 7.5s cubic-bezier(.65, 0, .35, 1) infinite; }
+}
+
+/* Filled primary button (pairs with .isaac-btn-outline) */
+.isaac-btn-solid {
+    display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+    padding: .9rem 2rem; border-radius: .6rem;
+    font-size: 1.125rem; font-weight: 700; letter-spacing: .02em; line-height: 1;
+    color: #1f1f1f; background: #FEA336; border: 2px solid #FEA336;
+    transition: filter .25s ease, box-shadow .25s ease;
+}
+.isaac-btn-solid:hover, .isaac-btn-solid:focus-visible {
+    filter: brightness(1.08); outline: none;
+    box-shadow: 0 0 0 4px rgba(254, 163, 54, .25), 0 12px 32px -12px rgba(254, 163, 54, .6);
+}
+.isaac-btn-solid svg { transition: transform .25s ease; }
+.isaac-btn-solid:hover svg { transform: translateX(3px); }
+
+/* Home page: round button that scrolls to the next section */
+.isaac-next {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 3rem; height: 3rem; border-radius: 9999px;
+    color: #FEA336; border: 2px solid rgba(254, 163, 54, .7); background: rgba(31, 31, 31, .4);
+    transition: background-color .25s ease, color .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.isaac-next:hover, .isaac-next:focus-visible {
+    background: #FEA336; color: #1f1f1f; border-color: #FEA336; outline: none;
+    box-shadow: 0 0 0 4px rgba(254, 163, 54, .25), 0 12px 32px -12px rgba(254, 163, 54, .6);
+}
+@keyframes isaac-next-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+@media (prefers-reduced-motion: no-preference) {
+    .isaac-next svg { animation: isaac-next-bob 1.8s ease-in-out infinite; }
+}
+
+/* Service pages */
+.isaac-offer { display: flex; align-items: center; gap: 1.25rem; }
+.isaac-offer-num {
+    flex: none; display: flex; align-items: center; justify-content: center;
+    width: 2.75rem; height: 2.75rem; border-radius: .75rem;
+    font-size: .9rem; font-weight: 800; letter-spacing: .05em;
+    color: #FEA336; background: rgba(254, 163, 54, .1); border: 1px solid rgba(254, 163, 54, .3);
+    transition: background-color .3s ease, color .3s ease;
+}
+.isaac-card:hover .isaac-offer-num { background: #FEA336; color: #1f1f1f; }
+
+.isaac-quote {
+    padding: 2rem; border-radius: 1rem; border: 1px solid rgba(255, 255, 255, .08);
+    border-left: 3px solid #FEA336;
+    background: linear-gradient(160deg, rgba(50, 58, 59, .6), rgba(38, 41, 41, .4));
+}
+
+.isaac-chip {
+    display: inline-flex; align-items: center; padding: .6rem 1.1rem; border-radius: 9999px;
+    font-size: .95rem; font-weight: 600; color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, .14); background: rgba(0, 0, 0, .2);
+    transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+.isaac-chip:hover, .isaac-chip:focus-visible { border-color: #FEA336; color: #FEA336; background: rgba(254, 163, 54, .08); outline: none; }

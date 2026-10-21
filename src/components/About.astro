@@ -1,4 +1,5 @@
 ---
+import NextSection from './NextSection.astro';
 import aboutChart from '../about-chart.mp4?url';
 
 // Every SVG dropped into src/assets/about/ becomes a slide, in filename order. Inlined so CSS can recolour it.
@@ -33,6 +34,7 @@ const slides = Object.keys(svgFiles).sort().map((path) => svgFiles[path]);
             </a>
         </div>
     </div>
+  <NextSection href="#contact" label="Contact Us" />
 </section>
 
 <script is:inline>

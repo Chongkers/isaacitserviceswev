@@ -1,0 +1,17 @@
+---
+// Modal body for a service card: offerings list, optional note and client quotes
+import type { Service } from '../data/services';
+
+const { service } = Astro.props as { service: Service };
+---
+
+<ul class="isaac-modal-list">
+    {service.items.map((item) => <li>{item}</li>)}
+</ul>
+{service.note && <p class="isaac-modal-note">{service.note}</p>}
+{service.quotes?.map((q) => (
+    <blockquote class="isaac-modal-quote">
+        <p>"{q.text}"</p>
+        <footer>{q.role}, {q.company}</footer>
+    </blockquote>
+))}

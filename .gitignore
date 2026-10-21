@@ -26,3 +26,7 @@ pnpm-debug.log*
 # Large video assets - serve from CDN or local only
 src/HERO-COVER.mp4
 src/*.mp4
+
+# Cloudflare local dev
+.dev.vars
+.wrangler/

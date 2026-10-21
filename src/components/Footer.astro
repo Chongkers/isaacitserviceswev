@@ -1,15 +1,24 @@
 ---
 import logo from '../logo.png';
+import { services, serviceHref } from '../data/services';
 ---
 
 <footer class="bg-isaac-dark">
     <div class="isaac-divider"></div>
     <div class="mx-auto max-w-screen-xl px-6 lg:px-8 py-10">
-        <div class="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
-            <a href="https://isaacitservices.com" class="flex items-center">
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
+            <a href="/" class="flex items-center self-start">
                 <img src={logo.src} class="mr-3 h-8" alt="ISAAC IT Services logo" width="32" height="32" loading="lazy" />
                 <span class="self-center text-2xl font-black tracking-tighter uppercase whitespace-nowrap text-white">ISAAC IT <span class="text-isaac-orange">SERVICES</span></span>
             </a>
+            <div>
+                <h2 class="mb-3 text-sm font-semibold uppercase text-white">Services</h2>
+                <ul class="grid gap-2 text-slate-300">
+                    {services.map((s) => (
+                        <li><a href={serviceHref(s)} class="hover:text-isaac-orange transition-colors">{s.title}</a></li>
+                    ))}
+                </ul>
+            </div>
             <div>
                 <h2 class="mb-3 text-sm font-semibold uppercase text-white">Follow us</h2>
                 <ul class="flex gap-6 text-slate-300">
@@ -23,6 +32,6 @@ import logo from '../logo.png';
             </div>
         </div>
         <hr class="my-8 !border-isaac-grey" />
-        <p class="text-sm text-slate-400">© {new Date().getFullYear()} <a href="https://isaacitservices.com" class="hover:underline">ISAAC IT Services</a>. All Rights Reserved.</p>
+        <p class="text-sm text-slate-400">© {new Date().getFullYear()} <a href="/" class="hover:underline">ISAAC IT Services</a>. All Rights Reserved.</p>
     </div>
 </footer>

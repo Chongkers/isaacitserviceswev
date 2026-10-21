@@ -1,3 +1,8 @@
+---
+// Turnstile site key (public, safe to commit). The matching secret is the TURNSTILE_SECRET_KEY Worker secret.
+const turnstileSiteKey = '0x4AAAAAAFfPawxA5yyfkwyA';
+---
+
 <section id="contact" class="isaac-section bg-isaac-darker">
   <div class="isaac-divider" style="position: absolute; top: 0; left: 0; right: 0;"></div>
   <div class="isaac-grid-bg"></div>
@@ -45,6 +50,14 @@
             placeholder="Leave a comment..."></textarea>
         </div>
 
+        <!-- Honeypot: hidden from people, filled in by bots -->
+        <div class="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+          <label for="website">Website</label>
+          <input type="text" name="website" id="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="cf-turnstile flex justify-center" data-sitekey={turnstileSiteKey} data-theme="dark"></div>
+
         <button type="submit" id="submit-btn"
           class="w-full py-3 px-5 text-sm font-bold text-center !text-isaac-dark !bg-isaac-orange rounded-lg transition hover:brightness-110 disabled:opacity-60 uppercase tracking-wider">
           Send message
@@ -55,8 +68,8 @@
   </div>
 </section>
 
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script is:inline>
-const scriptURL = 'https://script.google.com/a/macros/isaacitservices.com/s/AKfycbykRfUGPT0OQPP_gWf2MY4Cw7DWZSCvOCJVhZTj3Cj3LJ1Y7kXtz8sh_11n_FCCU5Q74A/exec';
 const form = document.getElementById('contact-form');
 const btn = document.getElementById('submit-btn');
 const msg = document.getElementById('form-msg');
@@ -67,26 +80,30 @@ form.addEventListener('submit', e => {
     btn.textContent = 'Processing...';
     msg.textContent = '';
 
-    fetch(scriptURL, {
+    fetch('/api/contact', {
         method: 'POST',
         body: new FormData(form)
     })
-    .then(response => response.json()) // Parse JSON response from the server
+    .then(response => response.json().catch(() => ({})))
     .then(data => {
         if (data.status === 'success') {
             msg.textContent = 'Inquiry received, thank you!';
             msg.className = 'text-center text-sm mt-2 text-green-400';
             form.reset();
         } else {
-            throw new Error(data.message || 'Server error occurred.');
+            const err = new Error(data.message || 'Submission failed. Please try again.');
+            err.fromServer = true;
+            throw err;
         }
     })
     .catch(error => {
         console.error('Error!', error.message);
-        msg.textContent = 'Submission failed. Please try again.';
+        msg.textContent = error.fromServer ? error.message : 'Submission failed. Please check your connection and try again.';
         msg.className = 'text-center text-sm mt-2 text-red-400';
     })
     .finally(() => {
+        // Turnstile tokens are single-use, so get a fresh one for the next attempt
+        if (window.turnstile) window.turnstile.reset();
         btn.disabled = false;
         btn.textContent = 'Send message';
     });

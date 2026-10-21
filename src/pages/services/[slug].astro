@@ -1,0 +1,162 @@
+---
+// One page per service at /services/<slug>/. Content comes from src/data/services.ts.
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { services, serviceHref, type Service } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props as { service: Service };
+
+// Inlined so the shared .isaac-illo rules can recolour them for the dark theme
+const illustrations = import.meta.glob<string>('../../assets/services/*.svg', { query: '?raw', import: 'default', eager: true });
+const illo = (name: string) => illustrations[`../../assets/services/${name}.svg`];
+const [heroIllo, detailIllo] = service.illustrations.map(illo);
+
+const others = services.filter((s) => s.slug !== service.slug);
+const pageUrl = new URL(serviceHref(service), Astro.site).href;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.summary,
+    url: pageUrl,
+    areaServed: 'PH',
+    provider: { '@type': 'ProfessionalService', name: 'ISAAC IT Services', url: Astro.site?.href },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: Astro.site?.href },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: new URL('/#services', Astro.site).href },
+      { '@type': 'ListItem', position: 3, name: service.title, item: pageUrl },
+    ],
+  },
+];
+---
+
+<Layout title={`${service.title} | ISAAC IT Services`} description={service.summary}>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <Navbar />
+
+  <main>
+    <!-- 1. Intro -->
+    <section class="isaac-section bg-isaac-dark">
+      <div class="isaac-grid-bg"></div>
+      <div class="isaac-glow" style="top: -14rem; right: -12rem;"></div>
+      <div class="mx-auto max-w-screen-xl px-6 lg:px-8 pt-28 pb-16 lg:pt-36 lg:pb-24 grid items-center gap-10 md:grid-cols-2 xl:gap-16">
+        <div class="isaac-reveal order-2 md:order-1 relative">
+          <div class="isaac-glow" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 32rem; height: 32rem;"></div>
+          <div class="isaac-illos" aria-hidden="true">
+            <div class="isaac-illo is-active" set:html={heroIllo} />
+          </div>
+        </div>
+        <div class="isaac-reveal order-1 md:order-2">
+          <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-400">
+            <ol class="flex flex-wrap items-center gap-2">
+              <li><a href="/" class="hover:text-isaac-orange transition-colors">Home</a></li>
+              <li aria-hidden="true">/</li>
+              <li><a href="/#services" class="hover:text-isaac-orange transition-colors">Services</a></li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page" class="text-slate-200">{service.title}</li>
+            </ol>
+          </nav>
+          <div class="isaac-icon">
+            <svg class="w-6 h-6" fill="currentColor" viewBox={service.icon.viewBox} aria-hidden="true" set:html={service.icon.paths} />
+          </div>
+          <span class="isaac-eyebrow">Services</span>
+          <h1 class="mb-5 text-4xl md:text-5xl tracking-tight font-extrabold text-white">{service.title}</h1>
+          <p class="mb-8 text-slate-300 md:text-xl">{service.summary}</p>
+          <a href="#details" class="isaac-btn-outline !rounded-full">
+            Learn more
+            <svg class="w-5 h-5 rotate-90" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. What's included, client quotes, case study -->
+    <section id="details" class="isaac-section bg-isaac-darker scroll-mt-16">
+      <div class="isaac-divider" style="position: absolute; top: 0; left: 0; right: 0;"></div>
+      <div class="isaac-glow" style="bottom: -16rem; left: -14rem;"></div>
+      <div class="mx-auto max-w-screen-xl px-6 lg:px-8 py-16 lg:py-24">
+        <div class="grid items-center gap-10 md:grid-cols-2 xl:gap-16">
+          <div class="isaac-reveal">
+            <span class="isaac-eyebrow">{service.title}</span>
+            <ul class="grid gap-4" data-scroll-grid>
+              {service.items.map((item, i) => (
+                <li class="isaac-card isaac-offer p-5 lg:p-6">
+                  <span class="isaac-offer-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="text-lg lg:text-xl font-bold text-white">{item}</span>
+                </li>
+              ))}
+            </ul>
+            {service.note && <p class="isaac-modal-note">{service.note}</p>}
+          </div>
+          <div class="isaac-reveal relative">
+            <div class="isaac-illos" aria-hidden="true">
+              <div class="isaac-illo is-active" set:html={detailIllo} />
+            </div>
+          </div>
+        </div>
+
+        {service.caseStudy && (
+          <article class="isaac-reveal mt-16 lg:mt-24 max-w-screen-md">
+            <h2 class="mb-4 text-3xl md:text-4xl tracking-tight font-extrabold text-white">{service.caseStudy.title}</h2>
+            <p class="text-slate-300 md:text-lg">{service.caseStudy.body}</p>
+          </article>
+        )}
+
+        {service.quotes && (
+          <div class:list={['mt-16 lg:mt-24 grid gap-6', { 'md:grid-cols-2': service.quotes.length > 1 }]}>
+            {service.quotes.map((q) => (
+              <figure class="isaac-reveal isaac-quote">
+                <svg class="w-8 h-8 mb-4 text-isaac-orange" fill="currentColor" viewBox="0 0 18 14" aria-hidden="true"><path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z"/></svg>
+                <blockquote><p class="text-lg md:text-xl font-medium text-white">"{q.text}"</p></blockquote>
+                <figcaption class="mt-5 flex items-center gap-3 text-sm">
+                  <span class="font-semibold text-white">{q.role}</span>
+                  <span class="h-4 w-px bg-slate-600" aria-hidden="true"></span>
+                  <span class="text-slate-400">{q.company}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- 3. Contact call to action -->
+    <section class="isaac-section bg-isaac-dark">
+      <div class="isaac-divider" style="position: absolute; top: 0; left: 0; right: 0;"></div>
+      <div class="isaac-grid-bg"></div>
+      <div class="isaac-glow" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+      <div class="mx-auto max-w-screen-xl px-6 lg:px-8 py-20 lg:py-28 text-center">
+        <div class="isaac-reveal mx-auto max-w-screen-sm">
+          <h2 class="mb-4 text-3xl md:text-5xl tracking-tight font-extrabold text-white">Let's talk!</h2>
+          <p class="mb-10 text-slate-300 sm:text-xl">Got a technical issue? Our team is ready to help.</p>
+          <a href="/#contact" class="isaac-btn-solid">
+            Contact Us
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </a>
+        </div>
+
+        <nav aria-label="Other services" class="isaac-reveal mt-16 lg:mt-20">
+          <span class="isaac-eyebrow">Services</span>
+          <ul class="flex flex-wrap justify-center gap-3">
+            {others.map((s) => (
+              <li><a href={serviceHref(s)} class="isaac-chip">{s.title}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

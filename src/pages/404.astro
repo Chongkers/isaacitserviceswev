@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Page not found | ISAAC IT Services">
+    <meta slot="head" name="robots" content="noindex" />
+    <Navbar />
+    <main>
+        <section class="isaac-section bg-isaac-dark min-h-[80svh] flex items-center">
+            <div class="isaac-grid-bg"></div>
+            <div class="isaac-glow" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+            <div class="mx-auto w-full max-w-screen-xl px-6 lg:px-8 pt-32 pb-20 text-center">
+                <div class="mx-auto max-w-screen-sm">
+                    <h1 class="mb-4 text-7xl lg:text-9xl tracking-tight font-extrabold text-isaac-orange">404</h1>
+                    <p class="mb-4 text-3xl md:text-4xl tracking-tight font-bold text-white">Something's missing.</p>
+                    <p class="mb-10 text-lg text-slate-300">Sorry, we can't find that page. You'll find lots to explore on the home page.</p>
+                    <a href="/" class="isaac-btn-solid">Back to Homepage</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <Footer />
+</Layout>

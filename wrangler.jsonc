@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Worker's name in the Cloudflare dashboard
+  "name": "isaacitserviceswev",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-01",
+
+  // www redirects to the root via a Cloudflare Redirect Rule, so only the root is attached here
+  "routes": [{ "pattern": "isaacitservices.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
+
+  // Static Astro build; /api/* goes to the Worker script first
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "isaac-contact",
+      "database_id": "99faa059-6d14-4c17-9618-06280b5bdc8d",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // Secrets (set in dashboard > Settings > Variables and secrets, type "Secret"):
+  //   TURNSTILE_SECRET_KEY, SHEETS_WEBHOOK_URL, SHEETS_WEBHOOK_SECRET
+
+  "observability": { "enabled": true }
+}
